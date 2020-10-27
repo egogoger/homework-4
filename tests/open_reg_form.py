@@ -11,8 +11,7 @@ from tests.test_class import Test
 def open_reg_form(test_case: unittest.TestCase, main_page: MainPage, form: RegForm):
     main_page.open()
     form.open()
-    test_case.assertEqual("SIGN UP", form.title_text)
-
+    form.check_error_msg_for(form.TITLE, test_case, "SIGN UP")
 
 class OpenRegTest(Test):
     def test(self):
