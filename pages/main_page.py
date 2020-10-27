@@ -87,4 +87,4 @@ class RegForm(Component):
             visible = True
         wait_for_element_by_selector(self.driver, selector, visible)
         if visible:
-            test.assertEqual(text, self.driver.find_element_by_css_selector(selector))
+            test.assertEqual(text, self.driver.find_element_by_css_selector(selector).text)

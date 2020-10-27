@@ -10,8 +10,8 @@ from tests.invalid_name import InvalidNameTest
 
 if __name__ == '__main__':
     suite = unittest.TestSuite((
-        # unittest.makeSuite(OpenRegTest),
-        # unittest.makeSuite(EmptyFieldsTest),
+        unittest.makeSuite(OpenRegTest),
+        unittest.makeSuite(EmptyFieldsTest),
         unittest.makeSuite(InvalidNameTest)
     ))
     result = unittest.TextTestRunner().run(suite)
