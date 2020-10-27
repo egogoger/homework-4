@@ -42,6 +42,10 @@ class RegForm(Component):
         wait_for_element_by_selector(self.driver, self.SUBMIT)
         self.driver.find_element_by_css_selector(self.SUBMIT).click()
 
+    def set_name(self, name):
+        wait_for_element_by_selector(self.driver, self.NAME)
+        self.driver.find_element_by_css_selector(self.NAME).send_keys(name)
+
     def set_password(self, password):
         wait_for_element_by_selector(self.driver, self.PASSWORD)
         self.driver.find_element_by_css_selector(self.PASSWORD).send_keys(password)
@@ -52,10 +56,13 @@ class RegForm(Component):
     def title_text(self):
         return self.driver.find_element_by_css_selector(self.TITLE).text
 
-    @property
-    def name_error(self):
-        wait_for_element_by_selector(self.driver, self.NAME_ERROR)
-        return self.driver.find_element_by_css_selector(self.NAME_ERROR)
+    # rewrite for all 
+    def get_name_error(self, visible=True):
+        wait_for_element_by_selector(self.driver, self.NAME_ERROR, visible)
+        if visible:
+            return self.driver.find_element_by_css_selector(self.NAME_ERROR)
+        else:
+            return None
 
     @property
     def login_error(self):
@@ -71,3 +78,13 @@ class RegForm(Component):
     def password_error(self):
         wait_for_element_by_selector(self.driver, self.PASSWORD_ERROR)
         return self.driver.find_element_by_css_selector(self.PASSWORD_ERROR)
+
+    # CHECKERS
+    def check_error_msg_for(self, selector, test, text):
+        if text is None:
+            visible = False
+        else:
+            visible = True
+        wait_for_element_by_selector(self.driver, selector, visible)
+        if visible:
+            test.assertEqual(text, self.driver.find_element_by_css_selector(selector).text)

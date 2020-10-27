@@ -27,24 +27,12 @@ class EmptyFieldsTest(Test):
 
         # All fields empty
 		form.submit()
-		self.check_name_error_msg(form, self.EMPTY_NAME_ERROR)
-		self.check_login_error_msg(form, self.EMPTY_LOGIN_ERROR)
-		self.check_email_error_msg(form, self.EMPTY_EMAIL_ERROR)
-		self.check_password_error_msg(form, self.EMPTY_PASSWORD_ERROR)
+		form.check_error_msg_for(form.NAME_ERROR, self, self.EMPTY_NAME_ERROR)
+		form.check_error_msg_for(form.LOGIN_ERROR, self, self.EMPTY_LOGIN_ERROR)
+		form.check_error_msg_for(form.EMAIL_ERROR, self, self.EMPTY_EMAIL_ERROR)
+		form.check_error_msg_for(form.PASSWORD_ERROR, self, self.EMPTY_PASSWORD_ERROR)
 
 		# Second password empty
 		form.set_password(self.TMP_PASSWORD)
 		form.submit()
-		self.check_password_error_msg(form, self.EMPTY_PASSWORD2_ERROR)
-
-	def check_name_error_msg(self, form: RegForm, text):
-		self.assertEqual(text, form.name_error.text)
-
-	def check_login_error_msg(self, form: RegForm, text):
-		self.assertEqual(text, form.login_error.text)
-
-	def check_email_error_msg(self, form: RegForm, text):
-		self.assertEqual(text, form.email_error.text)
-
-	def check_password_error_msg(self, form: RegForm, text):
-		self.assertEqual(text, form.password_error.text)
+		form.check_error_msg_for(form.PASSWORD_ERROR, self, self.EMPTY_PASSWORD2_ERROR)
