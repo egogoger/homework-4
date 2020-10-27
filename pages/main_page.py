@@ -51,34 +51,6 @@ class RegForm(Component):
         self.driver.find_element_by_css_selector(self.PASSWORD).send_keys(password)
 
 
-    # GETTERS
-    @property
-    def title_text(self):
-        return self.driver.find_element_by_css_selector(self.TITLE).text
-
-    # rewrite for all 
-    def get_name_error(self, visible=True):
-        wait_for_element_by_selector(self.driver, self.NAME_ERROR, visible)
-        if visible:
-            return self.driver.find_element_by_css_selector(self.NAME_ERROR)
-        else:
-            return None
-
-    @property
-    def login_error(self):
-        wait_for_element_by_selector(self.driver, self.LOGIN_ERROR)
-        return self.driver.find_element_by_css_selector(self.LOGIN_ERROR)
-
-    @property
-    def email_error(self):
-        wait_for_element_by_selector(self.driver, self.EMAIL_ERROR)
-        return self.driver.find_element_by_css_selector(self.EMAIL_ERROR)
-
-    @property
-    def password_error(self):
-        wait_for_element_by_selector(self.driver, self.PASSWORD_ERROR)
-        return self.driver.find_element_by_css_selector(self.PASSWORD_ERROR)
-
     # CHECKERS
     def check_error_msg_for(self, selector, test, text):
         if text is None:
