@@ -6,19 +6,24 @@ class MainPage(DefaultPage):
     PATH = ''
 
     @property
-    def form(self):
-        return AuthForm(self.driver)
-
-    @property
-    def logo(self):
-        return Logo(self.driver)
+    def reg_form(self):
+        return RegForm(self.driver)
 
 
-class AuthForm(Component):
+class RegForm(Component):
+    CONTAINER = '.l-form.l-card'
+    TITLE = f'{CONTAINER} h2'
+    LINK = '#signup-link'
+
     LOGIN = 'input[name="Login"]'
     PASSWORD = 'input[name="Password"]'
     NEXT = '[data-test-id="next-button"]'
     SUBMIT = '[data-test-id="submit-button"]'
+
+    # METHODS
+    def open(self):
+        self.driver.find_element_by_css_selector(self.LINK).click()
+        wait_for_element_by_selector(self.driver, self.CONTAINER)
 
     def set_login(self, login):
         wait_for_element_by_selector(self.driver, self.LOGIN)
@@ -36,9 +41,7 @@ class AuthForm(Component):
         wait_for_element_by_selector(self.driver, self.SUBMIT)
         self.driver.find_element_by_css_selector(self.SUBMIT).click()
 
-
-class Logo(Component):
-    LOGO = 'a.l-logo'
-
-    def check_logo(self):
-        wait_for_element_by_selector(self.driver, self.LOGO)
+    # GETTERS
+    @property
+    def title_text(self):
+        return self.driver.find_element_by_css_selector(self.TITLE).text

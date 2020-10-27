@@ -4,10 +4,12 @@ import unittest
 from selenium.webdriver import DesiredCapabilities, Remote
 from selenium.webdriver.support.ui import WebDriverWait
 
-from pages.main_page import MainPage
+from pages.main_page import MainPage, RegForm
 
 
-class ExampleTest(unittest.TestCase):
+class BeforeEachTest(unittest.TestCase):
+    TITLE = "SIGN UP"
+
     def setUp(self):
         browser = os.environ.get('BROWSER', 'CHROME')
 
@@ -22,6 +24,6 @@ class ExampleTest(unittest.TestCase):
     def test(self):
         main_page = MainPage(self.driver)
         main_page.open()
-        
-        logo = main_page.logo
-        logo.check_logo()
+        form = main_page.reg_form
+        form.open()
+        self.assertEqual(self.TITLE, form.title_text)
