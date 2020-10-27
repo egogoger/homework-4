@@ -78,3 +78,13 @@ class RegForm(Component):
     def password_error(self):
         wait_for_element_by_selector(self.driver, self.PASSWORD_ERROR)
         return self.driver.find_element_by_css_selector(self.PASSWORD_ERROR)
+
+    # CHECKERS
+    def check_error_msg_for(self, selector, test, text):
+        if text is None:
+            visible = False
+        else:
+            visible = True
+        wait_for_element_by_selector(self.driver, selector, visible)
+        if visible:
+            test.assertEqual(text, self.driver.find_element_by_css_selector(selector))

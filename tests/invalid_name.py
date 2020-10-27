@@ -21,21 +21,14 @@ class InvalidNameTest(Test):
 		# Cyrillic name
 		form.set_name(self.CYRILLIC_NAME)
 		form.submit()
-		self.check_name_error_msg(form, None)
+		form.check_error_msg_for(form.NAME_ERROR, self, None)
 
 		# Short name
 		form.set_name(self.SHORT_NAME)
 		form.submit()
-		self.check_name_error_msg(form, None)
+		form.check_error_msg_for(form.NAME_ERROR, self, None)
 
 		# Long name
 		form.set_name(self.LONG_NAME)
 		form.submit()
-		self.check_name_error_msg(form, None)
-
-	def check_name_error_msg(self, form: RegForm, text):
-		if text is None:
-			visible = False
-		else:
-			visible = True
-		self.assertEqual(text, form.get_name_error(visible=visible))
+		form.check_error_msg_for(form.NAME_ERROR, self, None)
