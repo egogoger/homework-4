@@ -19,16 +19,16 @@ class InvalidNameTest(Test):
 		open_reg_form(self, main_page, form)
 
 		# Cyrillic name
-		form.set_name(self.CYRILLIC_NAME)
+		form.set_input(form.NAME, self.CYRILLIC_NAME)
 		form.submit()
 		form.check_error_msg_for(form.NAME_ERROR, self, None)
 
 		# Short name
-		form.set_name(self.SHORT_NAME)
+		form.set_input(form.NAME, self.SHORT_NAME)
 		form.submit()
 		form.check_error_msg_for(form.NAME_ERROR, self, None)
 
 		# Long name
-		form.set_name(self.LONG_NAME)
+		form.set_input(form.NAME, self.LONG_NAME)
 		form.submit()
 		form.check_error_msg_for(form.NAME_ERROR, self, None)

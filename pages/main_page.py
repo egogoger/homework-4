@@ -42,13 +42,11 @@ class RegForm(Component):
         wait_for_element_by_selector(self.driver, self.SUBMIT)
         self.driver.find_element_by_css_selector(self.SUBMIT).click()
 
-    def set_name(self, name):
-        wait_for_element_by_selector(self.driver, self.NAME)
-        self.driver.find_element_by_css_selector(self.NAME).send_keys(name)
-
-    def set_password(self, password):
-        wait_for_element_by_selector(self.driver, self.PASSWORD)
-        self.driver.find_element_by_css_selector(self.PASSWORD).send_keys(password)
+    def set_input(self, selector, value):
+        wait_for_element_by_selector(self.driver, selector)
+        element = self.driver.find_element_by_css_selector(selector)
+        element.clear()
+        element.send_keys(value)
 
 
     # CHECKERS
