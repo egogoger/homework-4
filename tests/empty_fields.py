@@ -38,7 +38,7 @@ class EmptyFieldsTest(Test):
 		self.check_password_error_msg(form, self.EMPTY_PASSWORD2_ERROR)
 
 	def check_name_error_msg(self, form: RegForm, text):
-		self.assertEqual(text, form.name_error.text)
+		self.assertEqual(text, form.get_name_error().text)
 
 	def check_login_error_msg(self, form: RegForm, text):
 		self.assertEqual(text, form.login_error.text)
