@@ -8,8 +8,8 @@ from tests.empty_fields import EmptyFieldsTest
 
 if __name__ == '__main__':
     suite = unittest.TestSuite((
-        unittest.makeSuite(OpenRegTest),
-        # unittest.makeSuite(EmptyFieldsTest),
+        # unittest.makeSuite(OpenRegTest),
+        unittest.makeSuite(EmptyFieldsTest),
     ))
     result = unittest.TextTestRunner().run(suite)
     sys.exit(not result.wasSuccessful())

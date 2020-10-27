@@ -11,37 +11,63 @@ class MainPage(DefaultPage):
 
 
 class RegForm(Component):
+    # containers
     CONTAINER = '.l-form.l-card'
     TITLE = f'{CONTAINER} h2'
-    LINK = '#signup-link'
 
-    LOGIN = 'input[name="Login"]'
-    PASSWORD = 'input[name="Password"]'
-    NEXT = '[data-test-id="next-button"]'
-    SUBMIT = '[data-test-id="submit-button"]'
+    # inputs
+    NAME = '#name'
+    LOGIN = '#login'
+    EMAIL = '#email'
+    PASSWORD = '#password'
+    PASSWORD2 = '#password-confirm'
+
+    # links and buttons
+    LINK = '#signup-link'
+    SUBMIT = '#signup-submit'
+
+    # errors
+    ERROR_MESSAGE = '.m-error-message-small.is-error-input-underline'
+    NAME_ERROR = f'{NAME} + {ERROR_MESSAGE}'
+    LOGIN_ERROR = f'{LOGIN} + {ERROR_MESSAGE}'
+    EMAIL_ERROR = f'{EMAIL} + {ERROR_MESSAGE}'
+    PASSWORD_ERROR = f'{PASSWORD} + {ERROR_MESSAGE}'
 
     # METHODS
     def open(self):
         self.driver.find_element_by_css_selector(self.LINK).click()
         wait_for_element_by_selector(self.driver, self.CONTAINER)
-
-    def set_login(self, login):
-        wait_for_element_by_selector(self.driver, self.LOGIN)
-        self.driver.find_element_by_css_selector(self.LOGIN).send_keys(login)
-
-    def set_password(self, pwd):
-        wait_for_element_by_selector(self.driver, self.PASSWORD)
-        self.driver.find_element_by_css_selector(self.PASSWORD).send_keys(pwd)
-
-    def next(self):
-        wait_for_element_by_selector(self.driver, self.NEXT)
-        self.driver.find_element_by_css_selector(self.NEXT).click()
         
     def submit(self):
         wait_for_element_by_selector(self.driver, self.SUBMIT)
         self.driver.find_element_by_css_selector(self.SUBMIT).click()
 
+    def set_password(self, password):
+        wait_for_element_by_selector(self.driver, self.PASSWORD)
+        self.driver.find_element_by_css_selector(self.PASSWORD).send_keys(password)
+
+
     # GETTERS
     @property
     def title_text(self):
         return self.driver.find_element_by_css_selector(self.TITLE).text
+
+    @property
+    def name_error(self):
+        wait_for_element_by_selector(self.driver, self.NAME_ERROR)
+        return self.driver.find_element_by_css_selector(self.NAME_ERROR)
+
+    @property
+    def login_error(self):
+        wait_for_element_by_selector(self.driver, self.LOGIN_ERROR)
+        return self.driver.find_element_by_css_selector(self.LOGIN_ERROR)
+
+    @property
+    def email_error(self):
+        wait_for_element_by_selector(self.driver, self.EMAIL_ERROR)
+        return self.driver.find_element_by_css_selector(self.EMAIL_ERROR)
+
+    @property
+    def password_error(self):
+        wait_for_element_by_selector(self.driver, self.PASSWORD_ERROR)
+        return self.driver.find_element_by_css_selector(self.PASSWORD_ERROR)

@@ -7,8 +7,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from pages.main_page import MainPage, RegForm
 
 
-import unittest
-
 class Test(unittest.TestCase):
     @classmethod
     def setUpClass(self):
