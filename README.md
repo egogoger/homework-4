@@ -1,4 +1,4 @@
-#Тестики
+# Тестики
 [Чек лист](http://jira.bmstu.cloud/browse/QA-827) на регистрацию в сервисе [virusmusic.fun](https://virusmusic.fun)
 
 ## Запуск
