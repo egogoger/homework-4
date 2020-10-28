@@ -9,6 +9,10 @@ class MainPage(DefaultPage):
     def reg_form(self):
         return RegForm(self.driver)
 
+    @property
+    def login_form(self):
+        return LoginForm(self.driver)
+
 
 class RegForm(Component):
     # containers
@@ -25,6 +29,7 @@ class RegForm(Component):
     # links and buttons
     LINK = '#signup-link'
     SUBMIT = '#signup-submit'
+    ACCOUNT_ALREADY = '.m-form-description a.m-tiny-ref[href="/login"]'
 
     # errors
     ERROR_MESSAGE = '.m-error-message-small.is-error-input-underline'
@@ -48,6 +53,10 @@ class RegForm(Component):
         element.clear()
         element.send_keys(value)
 
+    def click_on(self, selector):
+        wait_for_element_by_selector(self.driver, selector)
+        self.driver.find_element_by_css_selector(selector).click()
+
 
     # CHECKERS
     def check_error_msg_for(self, selector, test, text):
@@ -58,3 +67,16 @@ class RegForm(Component):
         wait_for_element_by_selector(self.driver, selector, visible)
         if visible:
             test.assertEqual(text, self.driver.find_element_by_css_selector(selector).text)
+
+
+class LoginForm(Component):
+    CONTAINER = '.l-form.l-card'
+    TITLE = f'{CONTAINER} h2'
+
+    TITLE_TEXT = 'LOG IN'
+
+    def check_for_self(self, test):
+        wait_for_element_by_selector(self.driver, self.CONTAINER)
+        wait_for_element_by_selector(self.driver, self.TITLE)
+
+        test.assertEqual(self.TITLE_TEXT, self.driver.find_element_by_css_selector(self.TITLE).text)
