@@ -12,10 +12,10 @@ from tests.invalid_pass2 import InvalidPassword2Test
 
 if __name__ == '__main__':
     suite = unittest.TestSuite((
-        # unittest.makeSuite(OpenRegTest),
-        # unittest.makeSuite(EmptyFieldsTest),
-        # unittest.makeSuite(InvalidNameTest),
-        # unittest.makeSuite(InvalidLoginTest),
+        unittest.makeSuite(OpenRegTest),
+        unittest.makeSuite(EmptyFieldsTest),
+        unittest.makeSuite(InvalidNameTest),
+        unittest.makeSuite(InvalidLoginTest),
         unittest.makeSuite(InvalidPassword2Test),
     ))
     result = unittest.TextTestRunner().run(suite)
