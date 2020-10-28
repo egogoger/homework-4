@@ -10,17 +10,19 @@ from tests.invalid_login import InvalidLoginTest
 from tests.invalid_pass2 import InvalidPassword2Test
 from tests.invalid_email import InvalidEmailTest
 from tests.have_account_click import HaveAccountClickTest
+from tests.valid_reg import ValidRegTest
 
 
 if __name__ == '__main__':
     suite = unittest.TestSuite((
-        unittest.makeSuite(OpenRegTest),
-        unittest.makeSuite(EmptyFieldsTest),
-        unittest.makeSuite(InvalidNameTest),
-        unittest.makeSuite(InvalidLoginTest),
-        unittest.makeSuite(InvalidPassword2Test),
-        unittest.makeSuite(InvalidEmailTest),
-        unittest.makeSuite(HaveAccountClickTest),
+        # unittest.makeSuite(OpenRegTest),
+        # unittest.makeSuite(EmptyFieldsTest),
+        # unittest.makeSuite(InvalidNameTest),
+        # unittest.makeSuite(InvalidLoginTest),
+        # unittest.makeSuite(InvalidPassword2Test),
+        # unittest.makeSuite(InvalidEmailTest),
+        # unittest.makeSuite(HaveAccountClickTest),
+        unittest.makeSuite(ValidRegTest),
     ))
     result = unittest.TextTestRunner().run(suite)
     sys.exit(not result.wasSuccessful())

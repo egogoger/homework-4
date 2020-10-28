@@ -3,7 +3,10 @@ from utils import wait_for_element_by_selector
 
 
 class MainPage(DefaultPage):
-    PATH = ''
+    PATH = 'https://virusmusic.fun/'
+
+    LOGIN_LINK = '#profile-link .m-navbar-name'
+    SEARCH_INPUT = '.m-search-input'
 
     @property
     def reg_form(self):
@@ -12,6 +15,14 @@ class MainPage(DefaultPage):
     @property
     def login_form(self):
         return LoginForm(self.driver)
+
+    # CHECKERS
+    def check_for_self(self, test):
+        test.assertEqual(self.PATH, self.driver.current_url)
+
+    def check_for_login(self, test, login):
+        wait_for_element_by_selector(self.driver, self.LOGIN_LINK)
+        test.assertEqual(login, self.driver.find_element_by_css_selector(self.LOGIN_LINK).text)
 
 
 class RegForm(Component):
@@ -59,6 +70,9 @@ class RegForm(Component):
 
 
     # CHECKERS
+    def check_if_dissappeared(self):
+        wait_for_element_by_selector(self.driver, self.CONTAINER, False)
+
     def check_error_msg_for(self, selector, test, text):
         if text is None:
             visible = False
@@ -70,12 +84,15 @@ class RegForm(Component):
 
 
 class LoginForm(Component):
+    PATH = 'https://virusmusic.fun/login'
+
     CONTAINER = '.l-form.l-card'
     TITLE = f'{CONTAINER} h2'
 
     TITLE_TEXT = 'LOG IN'
 
     def check_for_self(self, test):
+        test.assertEqual(self.PATH, self.driver.current_url)
         wait_for_element_by_selector(self.driver, self.CONTAINER)
         wait_for_element_by_selector(self.driver, self.TITLE)
 
