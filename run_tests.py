@@ -8,6 +8,7 @@ from tests.empty_fields import EmptyFieldsTest
 from tests.invalid_name import InvalidNameTest
 from tests.invalid_login import InvalidLoginTest
 from tests.invalid_pass2 import InvalidPassword2Test
+from tests.invalid_email import InvalidEmailTest
 
 
 if __name__ == '__main__':
@@ -17,6 +18,7 @@ if __name__ == '__main__':
         unittest.makeSuite(InvalidNameTest),
         unittest.makeSuite(InvalidLoginTest),
         unittest.makeSuite(InvalidPassword2Test),
+        unittest.makeSuite(InvalidEmailTest),
     ))
     result = unittest.TextTestRunner().run(suite)
     sys.exit(not result.wasSuccessful())
