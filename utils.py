@@ -15,4 +15,5 @@ def wait_for_element_by_selector(driver, selector, visible=True):
             expected_conditions.invisibility_of_element_located((By.CSS_SELECTOR, selector)))
 
 def get_datetime() -> str:
-	return re.sub(r'[\.\-\s:]', '_', str(datetime.datetime.now()))
+	date = re.sub(r'[\.\-\s:]', '_', str(datetime.datetime.now()))
+	return date[:len(date)-6]
