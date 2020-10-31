@@ -1,5 +1,5 @@
 from pages.default_page import DefaultPage, Component
-from utils import wait_for_element_by_selector
+from utils import wait_for_element_by_selector, get_correct_values
 
 
 class MainPage(DefaultPage):
@@ -73,6 +73,11 @@ class RegForm(Component):
     def clear_inputs(self):
         for input in [self.NAME, self.LOGIN, self.EMAIL, self.PASSWORD, self.PASSWORD2]:
             self.driver.find_element_by_css_selector(input).clear()
+
+    def set_correct_values(self):
+        correct_values = get_correct_values()
+        for iii in range(len(self.INPUTS)):
+            self.set_input(self.INPUTS[iii], correct_values[iii])
 
 
     # CHECKERS

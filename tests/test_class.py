@@ -19,4 +19,4 @@ class Test(unittest.TestCase):
 
     @classmethod
     def tearDownClass(self):
-        self.driver.quit()        
+        self.driver.quit()
