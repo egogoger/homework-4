@@ -18,11 +18,11 @@ if __name__ == '__main__':
         # unittest.makeSuite(OpenRegTest),
         # unittest.makeSuite(EmptyFieldsTest),
         # unittest.makeSuite(InvalidNameTest),
-        # unittest.makeSuite(InvalidLoginTest),
+        unittest.makeSuite(InvalidLoginTest),
         # unittest.makeSuite(InvalidPassword2Test),
         # unittest.makeSuite(InvalidEmailTest),
         # unittest.makeSuite(HaveAccountClickTest),
-        unittest.makeSuite(ValidRegTest),
+        # unittest.makeSuite(ValidRegTest),
     ))
     result = unittest.TextTestRunner().run(suite)
     sys.exit(not result.wasSuccessful())

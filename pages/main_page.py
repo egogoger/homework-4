@@ -36,6 +36,7 @@ class RegForm(Component):
     EMAIL = '#email'
     PASSWORD = '#password'
     PASSWORD2 = '#password-confirm'
+    INPUTS = [NAME, LOGIN, EMAIL, PASSWORD, PASSWORD2]
 
     # links and buttons
     LINK = '#signup-link'
@@ -48,6 +49,7 @@ class RegForm(Component):
     LOGIN_ERROR = f'{LOGIN} + {ERROR_MESSAGE}'
     EMAIL_ERROR = f'{EMAIL} + {ERROR_MESSAGE}'
     PASSWORD_ERROR = f'{PASSWORD} + {ERROR_MESSAGE}'
+    BACKEND_ERROR = '.m-error-message-small.is-error-input-duplication'
 
     # METHODS
     def open(self):
@@ -67,6 +69,10 @@ class RegForm(Component):
     def click_on(self, selector):
         wait_for_element_by_selector(self.driver, selector)
         self.driver.find_element_by_css_selector(selector).click()
+
+    def clear_inputs(self):
+        for input in [self.NAME, self.LOGIN, self.EMAIL, self.PASSWORD, self.PASSWORD2]:
+            self.driver.find_element_by_css_selector(input).clear()
 
 
     # CHECKERS
