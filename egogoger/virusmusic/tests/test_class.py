@@ -2,9 +2,8 @@ import os
 import unittest
 
 from selenium.webdriver import DesiredCapabilities, Remote
-from selenium.webdriver.support.ui import WebDriverWait
 
-from pages.main_page import MainPage, RegForm
+from egogoger.virusmusic.pages.main_page import MainPage, RegForm
 
 
 class Test(unittest.TestCase):

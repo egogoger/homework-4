@@ -1,5 +1,6 @@
-from pages.default_page import DefaultPage, Component
-from utils import wait_for_element_by_selector, get_correct_values
+from .default_page import DefaultPage, Component
+from egogoger.utils import wait_for_element_by_selector
+from egogoger.virusmusic.utils import get_correct_values
 
 
 class MainPage(DefaultPage):

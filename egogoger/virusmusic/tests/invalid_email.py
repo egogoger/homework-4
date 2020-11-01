@@ -1,12 +1,7 @@
-import os
-import unittest
+from egogoger.virusmusic.pages.main_page import MainPage
+from .test_class import Test
+from .open_reg_form import open_reg_form
 
-from selenium.webdriver import DesiredCapabilities, Remote
-from selenium.webdriver.support.ui import WebDriverWait
-
-from pages.main_page import MainPage, RegForm
-from tests.test_class import Test
-from tests.open_reg_form import open_reg_form
 
 class InvalidEmailTest(Test):
 	# Correct messages

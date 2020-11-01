@@ -18,8 +18,3 @@ def wait_for_element_by_selector(driver, selector, visible=True):
 def get_datetime() -> str:
 	date = re.sub(r'[\.\-\s:]', '_', str(datetime.datetime.now()))
 	return date[:len(date)-6]
-
-
-def get_correct_values():
-	timestamp = get_datetime()
-	return ['Name_'+timestamp, 'Login_'+timestamp, 'email_'+timestamp+'@mail.ru', 'password', 'password']
