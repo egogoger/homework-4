@@ -3,6 +3,7 @@ from egogoger.virusmusic.utils import get_datetime
 from egogoger.virusmusic.constants import BACKEND_ERROR
 from egogoger.base_test import Test
 from .open_reg_form import open_reg_form
+from egogoger.utils import set_input
 
 
 class InvalidLoginTest(Test):
@@ -23,32 +24,32 @@ class InvalidLoginTest(Test):
 		form.clear_inputs()
 
 		# Cyrillic name
-		form.set_input(form.LOGIN, self.CYRILLIC_NAME)
+		set_input(self.driver, form.LOGIN, self.CYRILLIC_NAME)
 		form.submit()
 		form.check_error_msg_for(form.LOGIN_ERROR, self, self.LOGIN_ERROR)
 		form.clear_inputs()
 
 		# Cyrillic with numbers name
-		form.set_input(form.LOGIN, self.CYRILLIC_WITH_NUMBERS_NAME)
+		set_input(self.driver, form.LOGIN, self.CYRILLIC_WITH_NUMBERS_NAME)
 		form.submit()
 		form.check_error_msg_for(form.LOGIN_ERROR, self, self.LOGIN_ERROR)
 		form.clear_inputs()
 
 		# Short name
-		form.set_input(form.LOGIN, self.SHORT_NAME)
+		set_input(self.driver, form.LOGIN, self.SHORT_NAME)
 		form.submit()
 		form.check_error_msg_for(form.LOGIN_ERROR, self, self.LOGIN_ERROR)
 		form.clear_inputs()
 
 		# Numeric name
-		form.set_input(form.LOGIN, self.NUMERIC_NAME)
+		set_input(self.driver, form.LOGIN, self.NUMERIC_NAME)
 		form.submit()
 		form.check_error_msg_for(form.LOGIN_ERROR, self, None)
 		form.clear_inputs()
 
 		# Long name (BACKEND check)
 		form.set_correct_values()
-		form.set_input(form.LOGIN, self.LONG_NAME)
+		set_input(self.driver, form.LOGIN, self.LONG_NAME)
 		form.submit()
 		form.check_error_msg_for(form.BACKEND_ERROR, self, BACKEND_ERROR)
 		form.clear_inputs()

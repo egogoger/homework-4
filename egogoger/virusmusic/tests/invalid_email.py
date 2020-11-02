@@ -1,6 +1,7 @@
 from egogoger.virusmusic.pages.main_page import MainPage
 from egogoger.base_test import Test
 from .open_reg_form import open_reg_form
+from egogoger.utils import set_input
 
 
 class InvalidEmailTest(Test):
@@ -30,11 +31,11 @@ class InvalidEmailTest(Test):
 		good_cases = [self.CYRILLIC_NAME, self.LONG_NAME, self.NUMERIC_NAME, self.BAD_DOMAIN1, self.BAD_DOMAIN2, self.BAD_NAME1, self.BAD_NAME2]
 
 		for case in bad_cases:
-			form.set_input(form.EMAIL, case)
+			set_input(self.driver, form.EMAIL, case)
 			form.submit()
 			form.check_error_msg_for(form.EMAIL_ERROR, self, self.EMAIL_ERROR)
 
 		for case in good_cases:
-			form.set_input(form.EMAIL, case)
+			set_input(self.driver, form.EMAIL, case)
 			form.submit()
 			form.check_error_msg_for(form.EMAIL_ERROR, self, None)
