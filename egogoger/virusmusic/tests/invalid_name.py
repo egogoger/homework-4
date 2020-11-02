@@ -1,6 +1,6 @@
 from egogoger.virusmusic.pages.main_page import MainPage
 from egogoger.virusmusic.constants import BACKEND_ERROR
-from .test_class import Test
+from egogoger.base_test import Test
 from .open_reg_form import open_reg_form
 
 

@@ -1,5 +1,5 @@
 from egogoger.virusmusic.pages.main_page import MainPage
-from .test_class import Test
+from egogoger.base_test import Test
 from .open_reg_form import open_reg_form
 
 
