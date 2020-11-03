@@ -23,8 +23,18 @@ class PriorityTest(Test):
         print('tearDown')
         MainPage(self.driver).delete_todos()
 
-    def test_priority_click(self):
+    # def test_priority_click(self):
+    #     print('test_priority_click')
+    #     main_page = MainPage(self.driver)
+    #     main_page.open_todo_options(0, self)
+    #     main_page.open_priority_list()
+    #     main_page.check_priority_list_open(self)
+
+    def test_high_priority(self):
+        print('test_high_priority')
         main_page = MainPage(self.driver)
-        main_page.open_todo_options(0, self)
-        main_page.open_priority_list()
-        main_page.check_priority_list_open(self)
+
+        for priority in main_page.PRIORITY_NAMES:
+            main_page.set_priority(0, priority, self)
+            main_page.check_priority(0, priority, self)
+            main_page.choose_priority(priority, self) # just ot exit window
