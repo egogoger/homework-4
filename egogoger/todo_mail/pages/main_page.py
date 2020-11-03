@@ -70,15 +70,15 @@ class MainPage(DefaultPage):
                     break
 
     def open_todo_options(self, index, test):
-        print('open todo options')
+        # print('open todo options')
         try:
             ActionChains(self.driver).context_click(self.get_todos()[index]).perform()
         except IndexError:
-            print(self.get_todos())
+            # print(self.get_todos())
             test.fail('No todo was found')
 
     def open_priority_list(self):
-        print('open priority list')
+        # print('open priority list')
         wait_for_element_by_selector(self.driver, self.OPTION_LIST)
         for option in self.driver.find_elements_by_css_selector(self.TODO_POPUP_ITEM):
             if option.text == self.CHANGE_PRIORITY_TEXT:
@@ -86,22 +86,23 @@ class MainPage(DefaultPage):
                 break
 
     def choose_priority(self, priority, test):
-        print('choose priority')
+        # print('choose priority')
         for priority_item in self.driver.find_elements_by_css_selector(self.PRIORITY_LIST_ITEM):
-            print(priority_item.text)
+            # print(priority_item.text)
             if priority_item.text == priority:
                 priority_item.click()
+                wait_for_element_by_selector(self.driver, self.PRIORITY_LIST, False)
                 return
         test.fail('No such priority was found')
 
     def set_priority(self, todo_index, priority, test):
-        print(f'set priority {priority}')
+        # print(f'set priority {priority}')
         self.open_todo_options(todo_index, test)
         self.open_priority_list()
         self.choose_priority(priority, test)
 
     def check_priority(self, todo_index, priority, test):
-        print('check_priority')
+        # print('check_priority')
         # check in options
         self.open_todo_options(todo_index, test)
         self.open_priority_list()
@@ -113,7 +114,7 @@ class MainPage(DefaultPage):
 
 
     def check_priority_list_open(self, test):
-        print('check_priority_list_open')
+        # print('check_priority_list_open')
         wait_for_element_by_selector(self.driver, self.PRIORITY_LIST)
         priority_list_items = self.driver.find_elements_by_css_selector(self.PRIORITY_LIST_ITEM)
         test.assertEqual(len(self.PRIORITY_NAMES), len(priority_list_items))
