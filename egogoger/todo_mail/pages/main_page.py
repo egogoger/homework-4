@@ -20,7 +20,11 @@ class MainPage(DefaultPage):
         ' .MenuButton_base__2qd43.MenuButton_active__2j-To .MenuButton_text__1DWJd p'
     TODO = CONTAINER + ' li[data-task-id]'
     NEW_TODO_INPUT = "input.c0147[placeholder=\"Создать задачу\"]"
-    # OPEN_LINK = 'a.button[href="https://account.mail.ru/login?page=https://todo.mail.ru"]'
+    SETTINGS_BUTTON = '.ASettingsButton_base__19nsY.ASettingsButton_normal__3ZTNb'
+    SETTINGS_FRAME = '.ListMenu_base__2j-HN'
+    SETTINGS_ITEM = SETTINGS_FRAME + ' .MenuButton_text__1DWJd'
+
+    SORT_BY_PRIORITY = 'Сортировать по приоритету'
 
     TITLE_NAME = 'Основной'
     CHANGE_PRIORITY_TEXT = 'Изменить приоритет'
@@ -46,71 +50,102 @@ class MainPage(DefaultPage):
             test.fail(f'No todo at index {index}')
             return None
 
-    def create_todo(self, name: str):
+    def create_todo(self, name: str, index=None):
         self.driver.find_element_by_css_selector(self.NEW_TODO_INPUT).send_keys(name, Keys.RETURN)
-        wait_for_element_by_selector(self.driver, self.TODO)
+        if index is not None:
+            wait_for_element_by_selector(self.driver, f'{self.TODO}:nth-child({index+1})')
+        else:
+            wait_for_element_by_selector(self.driver, self.TODO)
 
-    def delete_todos(self):
-        # print('deleting todos')
+    def delete_todos(self, test):
+        print('deleting todos')
         try:
             self.driver.find_element_by_css_selector(self.PRIORITY_LIST_ITEM).click()
         except NoSuchElementException:
             pass
         
         # Delete all todos
+        prev_length = len(self.get_todos())
         while len(self.get_todos()) != 0:
-            todo = self.get_todos()[0]
-            # print('got todo')
-            ActionChains(self.driver).context_click(todo).perform()
-            # print('right clicked')
-            wait_for_element_by_selector(self.driver, self.OPTION_LIST)
-            for li in self.driver.find_elements_by_css_selector(self.TODO_POPUP_ITEM):
+            self.open_todo_options(0, test)
+            options = self.driver.find_element_by_css_selector(self.OPTION_LIST)
+            for li in options.find_elements_by_css_selector(self.TODO_POPUP_ITEM):
                 if li.text == self.TODO_DELETE_TEXT:
                     li.click()
+                    wait_for_element_by_selector(self.driver, self.OPTION_LIST, False)
+                    time.sleep(0.5)
                     break
+            if prev_length == len(self.get_todos()):
+                test.fail('Deletion failed')
+            else:
+                prev_length = len(self.get_todos())
 
     def open_todo_options(self, index, test):
-        # print('open todo options')
+        print(f'click on title {index}')
+        # self.driver.find_element_by_css_selector(self.TITLE).click()
         try:
+            print(f'right click on todo {index}')
             ActionChains(self.driver).context_click(self.get_todos()[index]).perform()
+            wait_for_element_by_selector(self.driver, self.OPTION_LIST)
         except IndexError:
             # print(self.get_todos())
             test.fail('No todo was found')
 
     def open_priority_list(self):
-        # print('open priority list')
-        wait_for_element_by_selector(self.driver, self.OPTION_LIST)
-        for option in self.driver.find_elements_by_css_selector(self.TODO_POPUP_ITEM):
+        print('open priority list')
+        option_list = self.driver.find_element_by_css_selector(self.OPTION_LIST)
+        for option in option_list.find_elements_by_css_selector(self.TODO_POPUP_ITEM):
             if option.text == self.CHANGE_PRIORITY_TEXT:
                 option.click()
                 break
 
-    def choose_priority(self, priority, test):
-        # print('choose priority')
+    def choose_priority(self, priority):
+        print(f'choose priority {priority}')
         for priority_item in self.driver.find_elements_by_css_selector(self.PRIORITY_LIST_ITEM):
-            # print(priority_item.text)
+            print(priority_item.text)
             if priority_item.text == priority:
                 priority_item.click()
-                wait_for_element_by_selector(self.driver, self.PRIORITY_LIST, False)
-                return
-        test.fail('No such priority was found')
+                break
+        wait_for_element_by_selector(self.driver, self.PRIORITY_LIST, False)
+
+    def open_settings(self):
+        wait_for_element_by_selector(self.driver, self.SETTINGS_BUTTON)
+        self.driver.find_element_by_css_selector(self.SETTINGS_BUTTON).click()
+        wait_for_element_by_selector(self.driver, self.SETTINGS_FRAME)
 
     def set_priority(self, todo_index, priority, test):
-        # print(f'set priority {priority}')
+        print(f'set priority {todo_index} {priority}')
         self.open_todo_options(todo_index, test)
         self.open_priority_list()
-        self.choose_priority(priority, test)
+        self.choose_priority(priority)
 
-    def check_priority(self, todo_index, priority, test):
-        # print('check_priority')
-        # check in options
+    def set_sort(self, sort_name):
+        print(f'set sort {sort_name}')
+        self.open_settings()
+        for setting in self.driver.find_elements_by_css_selector(self.SETTINGS_ITEM):
+            if setting.text == self.SORT_BY_PRIORITY:
+                setting.click()
+                break
+        wait_for_element_by_selector(self.driver, self.SETTINGS_FRAME, False)
+
+    def get_priority(self, todo_index, test) -> str:
+        print(f'get_priority {todo_index}')
         self.open_todo_options(todo_index, test)
         self.open_priority_list()
         option = self.driver.find_element_by_css_selector(self.ACTIVE_PRIORITY_P)
-        if option is None:
+        text = None
+        if option is not None:
+            text = option.text
+        option.click()
+        return text
+
+    def check_priority(self, todo_index, priority, test):
+        print('check_priority')
+        text = self.get_priority(todo_index, test)
+        if text is None:
             test.fail('Active priority was not found')
         else:
-            test.assertEqual(option.text, priority)
+            test.assertEqual(text, priority)
 
 
     def check_priority_list_open(self, test):
@@ -121,6 +156,7 @@ class MainPage(DefaultPage):
             
 
     def check_for_self(self, test):
+        print('check_for_self')
         wait_for_element_by_selector(self.driver, self.CONTAINER)
         wait_for_element_by_selector(self.driver, self.TITLE)
         title_name = self.driver.find_element_by_css_selector(self.TITLE).text
@@ -128,3 +164,25 @@ class MainPage(DefaultPage):
 
         current_url = self.driver.current_url
         test.assertEqual(self.FINAL_PATH, current_url)
+
+    def check_todo_order(self, test):
+        print('check todo orde')
+        prev_priority = None
+        for iii in range(len(self.get_todos())):
+            curr_priority = self.get_priority(iii, test)
+            if prev_priority is not None:
+                test.assertGreaterEqual(get_priority_number(prev_priority), get_priority_number(curr_priority))
+            prev_priority = curr_priority
+        
+
+def get_priority_number(priority: str) -> int:
+    if priority == MainPage.NO_PRIORITY:
+        return 0
+    elif priority == MainPage.LOW_PRIORITY:
+        return 1
+    elif priority == MainPage.MID_PRIORITY:
+        return 2
+    elif priority == MainPage.HIGH_PRIORITY:
+        return 3
+    else:
+        return None
