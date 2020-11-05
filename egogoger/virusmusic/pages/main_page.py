@@ -5,7 +5,7 @@ from egogoger.virusmusic.utils import get_correct_values
 
 class MainPage(DefaultPage):
     def __init__(self, driver, path='https://virusmusic.fun/'):
-        super(driver, path)
+        super().__init__(driver, path)
 
     LOGIN_LINK = '#profile-link .m-navbar-name'
     SEARCH_INPUT = '.m-search-input'

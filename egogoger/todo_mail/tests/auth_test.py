@@ -10,11 +10,6 @@ def auth_test(test):
     main_page = MainPage(test.driver)
     main_page.open()
 
-    # window_before = test.driver.window_handles[0]
-    # main_page.open_auth()
-    # window_after = test.driver.window_handles[1]
-    # test.driver.switch_to_window(window_after)
-
     auth_page = AuthPage(test.driver)
     auth_page.check_for_self(test)
 

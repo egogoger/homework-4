@@ -11,7 +11,6 @@ class PriorityTest(Test):
     TODO_NAMES = ["First", "Second", "Third"]
 
     def setUp(self):
-        # print('setUp')
         auth_test(self)
         # Create 3 new todos
         main_page = MainPage(self.driver)
@@ -23,18 +22,15 @@ class PriorityTest(Test):
 
     def tearDown(self):
         # Delete all todos
-        # print('tearDown')
         MainPage(self.driver).delete_todos(self)
 
     def test_priority_click(self):
-        print('test_priority_click')
         main_page = MainPage(self.driver)
         main_page.open_todo_options(0, self)
         main_page.open_priority_list()
         main_page.check_priority_list_open(self)
 
     def test_set_priority(self):
-        # print('test_set_priority')
         main_page = MainPage(self.driver)
 
         for priority in main_page.PRIORITY_NAMES:
