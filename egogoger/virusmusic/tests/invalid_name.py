@@ -1,13 +1,8 @@
-import os
-import unittest
-
-from selenium.webdriver import DesiredCapabilities, Remote
-from selenium.webdriver.support.ui import WebDriverWait
-
-from pages.main_page import MainPage, RegForm
-from tests.test_class import Test
-from tests.open_reg_form import open_reg_form
-from constants import BACKEND_ERROR
+from egogoger.virusmusic.pages.main_page import MainPage
+from egogoger.virusmusic.constants import BACKEND_ERROR
+from egogoger.base_test import Test
+from .open_reg_form import open_reg_form
+from egogoger.utils import set_input
 
 
 class InvalidNameTest(Test):
@@ -22,13 +17,13 @@ class InvalidNameTest(Test):
 		form.clear_inputs()
 
 		# Cyrillic name
-		form.set_input(form.NAME, self.CYRILLIC_NAME)
+		set_input(self.driver, form.NAME, self.CYRILLIC_NAME)
 		form.submit()
 		form.check_error_msg_for(form.NAME_ERROR, self, None)
 		form.clear_inputs()
 
 		# Short name
-		form.set_input(form.NAME, self.SHORT_NAME)
+		set_input(self.driver, form.NAME, self.SHORT_NAME)
 		form.submit()
 		form.check_error_msg_for(form.NAME_ERROR, self, None)
 		form.clear_inputs()
@@ -36,7 +31,7 @@ class InvalidNameTest(Test):
 		# BACKEND checks
 		## Long name
 		form.set_correct_values()
-		form.set_input(form.NAME, self.LONG_NAME)
+		set_input(self.driver, form.NAME, self.LONG_NAME)
 		form.submit()
 		form.check_error_msg_for(form.BACKEND_ERROR, self, BACKEND_ERROR)
 		form.clear_inputs()

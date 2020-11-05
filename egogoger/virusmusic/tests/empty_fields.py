@@ -1,12 +1,7 @@
-import os
-import unittest
-
-from selenium.webdriver import DesiredCapabilities, Remote
-from selenium.webdriver.support.ui import WebDriverWait
-
-from pages.main_page import MainPage, RegForm
-from tests.test_class import Test
-from tests.open_reg_form import open_reg_form
+from egogoger.virusmusic.pages.main_page import MainPage
+from egogoger.base_test import Test
+from .open_reg_form import open_reg_form
+from egogoger.utils import set_input
 
 
 class EmptyFieldsTest(Test):
@@ -33,6 +28,6 @@ class EmptyFieldsTest(Test):
 		form.check_error_msg_for(form.PASSWORD_ERROR, self, self.EMPTY_PASSWORD_ERROR)
 
 		# Second password empty
-		form.set_input(form.PASSWORD, self.TMP_PASSWORD)
+		set_input(self.driver, form.PASSWORD, self.TMP_PASSWORD)
 		form.submit()
 		form.check_error_msg_for(form.PASSWORD_ERROR, self, self.EMPTY_PASSWORD2_ERROR)

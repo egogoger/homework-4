@@ -1,9 +1,11 @@
-from pages.default_page import DefaultPage, Component
-from utils import wait_for_element_by_selector, get_correct_values
+from egogoger.default_page import DefaultPage, Component
+from egogoger.utils import wait_for_element_by_selector
+from egogoger.virusmusic.utils import get_correct_values
 
 
 class MainPage(DefaultPage):
-    PATH = 'https://virusmusic.fun/'
+    def __init__(self, driver, path='https://virusmusic.fun/'):
+        super().__init__(driver, path)
 
     LOGIN_LINK = '#profile-link .m-navbar-name'
     SEARCH_INPUT = '.m-search-input'

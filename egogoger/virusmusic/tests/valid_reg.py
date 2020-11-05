@@ -1,13 +1,8 @@
-import os
-import unittest
-
-from selenium.webdriver import DesiredCapabilities, Remote
-from selenium.webdriver.support.ui import WebDriverWait
-
-from pages.main_page import MainPage, RegForm
-from tests.test_class import Test
-from tests.open_reg_form import open_reg_form
-from utils import get_datetime
+from egogoger.virusmusic.pages.main_page import MainPage, RegForm
+from egogoger.virusmusic.utils import get_datetime
+from egogoger.base_test import Test
+from .open_reg_form import open_reg_form
+from egogoger.utils import set_input
 
 
 class ValidRegTest(Test):
@@ -32,7 +27,7 @@ class ValidRegTest(Test):
 		]
 
 		for i in inputs:
-			form.set_input(i[0], i[1])
+			set_input(self.driver, i[0], i[1])
 
 		form.submit()
 		form.check_if_dissappeared()
